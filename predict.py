@@ -19,6 +19,8 @@ from models import RNN_EMBED
 from datasets import utils
 
 
+
+
 # Hyper Parameters
 TIME_STEP = 150
 INPUT_SIZE = 400
@@ -26,13 +28,15 @@ HIDDEN_SIZE = 50
 NUM_LAYERS = 1
 NUM_CLASSES = 2
 
+base_dir = os.path.dirname(__file__)
 
 
 net = RNN_EMBED(INPUT_SIZE, HIDDEN_SIZE, NUM_LAYERS, NUM_CLASSES)
 
 
-if os.path.isfile('saves/hotel_rnn_params.pkl'):
-    net.load_state_dict(torch.load('saves/hotel_rnn_params.pkl'))
+net_params_file = os.path.join(base_dir, 'saves/hotel_rnn_params.pkl')
+if os.path.isfile(net_params_file):
+    net.load_state_dict(torch.load(net_params_file))
 
 
 
@@ -56,7 +60,7 @@ sentence = utils.segment_character(sentence, stopwords)
 
 # inputs = utils.build_words_to_vectors([sentence], TIME_STEP, word_vectors)
 # np.save('inputs', inputs)
-inputs = np.load('inputs.npy')
+inputs = np.load(os.path.join(base_dir, 'inputs.npy'))
 
 sentences = Variable(torch.FloatTensor(inputs))
 prediction = net(sentences)

@@ -48,7 +48,7 @@ sentence = '在衢州能住到这样的酒店算是很不错了，房间液晶�
 # sentence = '设施太老旧了，连瓶水都没有，要自己烧自来水喝的。拖鞋有非常刺鼻的味道，床又小床垫又硬，浴缸还有污迹，电梯里还一股烟味。体验非常不好，住得很不开心。'
 sentence = '第一次住如家的酒店，空气很不好，暖气很难受，不过，毕竟价格摆在那里'
 sentence = utils.clean_character_sentence(sentence)
-stopwords = [w.strip() for w in codecs.open('stopwords.txt', 'r', encoding='utf-8').readlines()]
+stopwords = [w.strip() for w in codecs.open(os.path.join(base_dir, 'stopwords.txt'), 'r', encoding='utf-8').readlines()]
 sentence = utils.segment_character(sentence, stopwords)
 
 

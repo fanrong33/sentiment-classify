@@ -3,10 +3,12 @@
     $output = '';
     ini_set('display_errors', 'off');
     if($_POST){
-        
-        $sentence = $_POST['sentence'];
-        
-        $output = shell_exec("sudo -tt /root/anaconda3/envs/torch/bin/python sentiment-classify-master/predict.py '$sentence' 2>&1");
+
+        $sentence = trim($_POST['sentence']);
+        if($sentence){
+          file_put_contents('sentiment-classify-master/p.txt', $sentence);
+          $output = shell_exec("sudo -tt /root/anaconda3/envs/torch/bin/python sentiment-classify-master/predict.py 2>&1");
+        }
         // var_dump($output);
     }
 ?>
@@ -22,10 +24,10 @@
     <div class="container">
       <div class="row">
           <div class="col-xs-12 col-md-4" style="margin-top:20px;">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST">
                   <div class="form-group">
                     <label for="exampleInputEmail1">请输入一段想分析的文本: <a href="">随机示例</a></label>
-                    <input type="text" class="form-control" name="sentence" value="<?php echo $_POST['sentence']; ?>" placeholder="">
+                    <textarea type="text" class="form-control" name="sentence" placeholder=""><?php echo $_POST['sentence']; ?></textarea>
                   </div>
                   <button type="submit" class="btn btn-success">开始</button>
                 </form>
